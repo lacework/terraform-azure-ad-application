@@ -110,8 +110,10 @@ resource "azurerm_role_assignment" "grant_reader_role_to_subscriptions" {
 }
 
 resource "random_password" "generator" {
-  count  = var.create ? 1 : 0
-  length = var.password_length
+  count            = var.create ? 1 : 0
+  length           = var.password_length
+  special          = true
+  override_special = "!@#$%&*()-_=+[]{}:;,.~?^"
 }
 
 resource "azuread_application_password" "client_secret" {
