@@ -1,5 +1,5 @@
 # Default AD Application to Integrate Azure Tenant and Default Subscription
-The following example shows how to deploy a new Azure AD application to integrate an Azure Tenant and select subscriptions with Lacework. This example as provides examples of configuring the integration with module inputs.
+The following example shows how to deploy a new Azure AD application to integrate an Azure Tenant and select subscriptions with Lacework. This example provides examples of configuring the integration with module inputs.
 
 ```hcl
 terraform {
