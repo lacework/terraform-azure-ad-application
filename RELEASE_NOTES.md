@@ -1,7 +1,7 @@
 # Release Notes
-Another day, another release. These are the release notes for the version `v0.2.1`.
+Another day, another release. These are the release notes for the version `v0.2.2`.
 
 ## Bug Fixes
-* fix: updating to proper `azuread` provider version (#17) (Alan Nix)([d6a1452](https://github.com/lacework/terraform-azure-ad-application/commit/d6a14529389b0268e2768b81dd8f2c2f0e693e19))
+* fix(deps): upgrade min azurerm version to ~> 2.28 (#19) (Salim Afiune)([e528d18](https://github.com/lacework/terraform-azure-ad-application/commit/e528d18db2564fbd5b38b55130aff0aa075f74bf))
 ## Other Changes
-* chore: version bump to v0.2.1-dev (Lacework)([f6c0930](https://github.com/lacework/terraform-azure-ad-application/commit/f6c09305f2f8f859c2c8c475ff81f75b36aef43d))
+* chore: version bump to v0.2.2-dev (Lacework)([b3dbb1b](https://github.com/lacework/terraform-azure-ad-application/commit/b3dbb1bca79498a48f26aa11cc0bc0062a20dbfa))
