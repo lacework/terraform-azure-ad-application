@@ -38,7 +38,7 @@ resource "azuread_application" "lacework" {
   display_name  = "Lacework Reader"
   owners        = [data.azuread_client_config.current.object_id]
   logo_image    = filebase64("lacework_logo.png")
-  marketing_url = "https://www.lacework.com" 
+  marketing_url = "https://www.lacework.com/" 
   web{
     homepage_url = "https://www.lacework.com" 
   }
@@ -50,7 +50,6 @@ resource "azuread_directory_role" "dir-reader" {
 
 resource "azuread_directory_role_member" "lacework-dir-reader" {
   role_object_id   = azuread_directory_role.dir-reader.object_id
-  #member_object_id = azuread_application.lacework[0].object_id
   member_object_id = azuread_group.readers.id
 }
 
@@ -60,6 +59,7 @@ resource "azuread_service_principal" "lacework" {
 }
 resource "azuread_group_member" "lacework-reader-member" {
   group_object_id  = azuread_group.readers.id
+  #use service principal as object id, not appreg
   member_object_id = azuread_service_principal.lacework[0].object_id
 }
 
