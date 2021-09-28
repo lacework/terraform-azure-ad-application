@@ -18,87 +18,60 @@ locals {
   ) : ""
 }
 
-data "azurerm_subscription" "primary" {}
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+}
+
+data "azuread_client_config" "current" {}
+
+## Create a Group to host the service principal. The group is then assigned Directory Reader
+resource "azuread_group" "readers" {
+  display_name     = "Directory Readers"
+  owners           = [data.azuread_client_config.current.object_id]
+  security_enabled = true
+  assignable_to_role = true
+}
+
 resource "azuread_application" "lacework" {
-  count           = var.create ? 1 : 0
-  display_name    = var.application_name
-  identifier_uris = var.application_identifier_uris
-
-  // Microsoft Graph
-  required_resource_access {
-    resource_app_id = "00000003-0000-0000-c000-000000000000"
-
-    resource_access {
-      id   = "e1fe6dd8-ba31-4d61-89e7-88639da4683d"
-      type = "Scope"
-    }
-
-    resource_access {
-      id   = "df021288-bdef-4463-88db-98f22de89214"
-      type = "Role"
-    }
+  count         = var.create ? 1 : 0
+  display_name  = "Lacework Reader"
+  owners        = [data.azuread_client_config.current.object_id]
+  logo_image    = filebase64("lacework_logo.png")
+  marketing_url = "https://www.lacework.com" 
+  web{
+    homepage_url = "https://www.lacework.com" 
   }
+}
+resource "azuread_directory_role" "dir-reader" {
+  #alternatively display_name = "Directory Reader" 
+  template_id = "88d8e3e3-8f55-4a1e-953a-9b9898b8876b"
+}
 
-  // AAD Graph API
-  required_resource_access {
-    resource_app_id = "00000002-0000-0000-c000-000000000000"
-
-    resource_access {
-      id   = "5778995a-e1bf-45b8-affa-663a9f3f4d04"
-      type = "Role"
-    }
-  }
-
-  // Azure Storage
-  required_resource_access {
-    resource_app_id = "e406a681-f3d4-42a8-90b6-c2b029497af1"
-
-    resource_access {
-      id   = "03e0da56-190b-40ad-a80c-ea378c433f7f"
-      type = "Scope"
-    }
-  }
-
-  // Azure Key Vault
-  required_resource_access {
-    resource_app_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
-
-    resource_access {
-      id   = "f53da476-18e3-4152-8e01-aec403e6edc0"
-      type = "Scope"
-    }
-  }
+resource "azuread_directory_role_member" "lacework-dir-reader" {
+  role_object_id   = azuread_directory_role.dir-reader.object_id
+  #member_object_id = azuread_application.lacework[0].object_id
+  member_object_id = azuread_group.readers.id
 }
 
 resource "azuread_service_principal" "lacework" {
   count          = var.create ? 1 : 0
   application_id = local.application_id
-
-  # ** WORKAROUND: @afiune today it is NOT possible to automate the process of granting admin
-  #                consent to new Active Directory Applications, though it is possible to do
-  #                it via the AzureCLI, this nice trick will try to automatically grant admin
-  #                consent and, if it does not succeed, it will print out the URL that the user
-  #                needs to follow do grant manual admin consent. Wihtout this permission we
-  #                won't be able to create Azure Integration on the user's Lacework account.
-  #
-  provisioner "local-exec" {
-    command = "az ad app permission admin-consent --id ${local.application_id} && echo SUCCESS!! || echo ERROR!!! Unable to grant admin consent, grant it manually by following the URL: https://login.microsoftonline.com/${local.tenant_id}/adminconsent?client_id=${local.application_id}"
-  }
+}
+resource "azuread_group_member" "lacework-reader-member" {
+  group_object_id  = azuread_group.readers.id
+  member_object_id = azuread_service_principal.lacework[0].object_id
 }
 
-resource "azurerm_key_vault_access_policy" "default" {
-  count        = var.create ? length(var.key_vault_ids) : 0
-  key_vault_id = var.key_vault_ids[count.index]
-  object_id    = local.service_principal_id
-  tenant_id    = local.tenant_id
-
-  key_permissions = [
-    "List"
-  ]
-  secret_permissions = [
-    "List"
-  ]
+resource "azuread_application_password" "client_secret" {
+  count                 = var.create ? 1 : 0
+  application_object_id = azuread_application.lacework[count.index].object_id
+  end_date              = "2299-12-31T01:02:03Z"
+  depends_on            = [azuread_service_principal.lacework]
 }
+
+## Now grant Reader permissions to the Azure Subscriptions or Management Groups
+data "azurerm_subscription" "primary" {}
 
 data "azurerm_subscriptions" "available" {}
 resource "azurerm_role_assignment" "grant_reader_role_to_subscriptions" {
@@ -107,13 +80,6 @@ resource "azurerm_role_assignment" "grant_reader_role_to_subscriptions" {
 
   principal_id         = local.service_principal_id
   role_definition_name = "Reader"
-}
-
-resource "azuread_application_password" "client_secret" {
-  count                 = var.create ? 1 : 0
-  application_object_id = azuread_application.lacework[count.index].object_id
-  end_date              = "2299-12-31T01:02:03Z"
-  depends_on            = [azuread_service_principal.lacework]
 }
 
 data "azurerm_management_group" "default" {
