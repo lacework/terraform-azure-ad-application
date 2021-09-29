@@ -25,14 +25,7 @@ provider "azurerm" {
 
 data "azuread_client_config" "current" {}
 
-## Create a Group to host the service principal. The group is then assigned Directory Reader
-resource "azuread_group" "readers" {
-  display_name     = "Directory Readers"
-  owners           = [data.azuread_client_config.current.object_id]
-  security_enabled = true
-  assignable_to_role = true
-}
-
+## Create a service principal and assigned Directory Reader role in Azure AD
 resource "azuread_application" "lacework" {
   count         = var.create ? 1 : 0
   display_name  = "Lacework Reader"
@@ -50,17 +43,12 @@ resource "azuread_directory_role" "dir-reader" {
 
 resource "azuread_directory_role_member" "lacework-dir-reader" {
   role_object_id   = azuread_directory_role.dir-reader.object_id
-  member_object_id = azuread_group.readers.id
+  member_object_id = azuread_service_principal.lacework[0].object_id
 }
 
 resource "azuread_service_principal" "lacework" {
   count          = var.create ? 1 : 0
   application_id = local.application_id
-}
-resource "azuread_group_member" "lacework-reader-member" {
-  group_object_id  = azuread_group.readers.id
-  #use service principal as object id, not appreg
-  member_object_id = azuread_service_principal.lacework[0].object_id
 }
 
 resource "azuread_application_password" "client_secret" {
