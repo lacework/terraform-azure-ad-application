@@ -30,7 +30,7 @@ resource "azuread_application" "lacework" {
   count         = var.create ? 1 : 0
   display_name  = "Lacework Reader"
   owners        = [data.azuread_client_config.current.object_id]
-  logo_image    = filebase64("lacework_logo.png")
+  logo_image    = filebase64("${path.module}/lacework_logo.png")
   marketing_url = "https://www.lacework.com/" 
   web{
     homepage_url = "https://www.lacework.com" 
@@ -41,19 +41,20 @@ resource "azuread_directory_role" "dir-reader" {
   template_id = "88d8e3e3-8f55-4a1e-953a-9b9898b8876b"
 }
 
-resource "azuread_directory_role_member" "lacework-dir-reader" {
-  role_object_id   = azuread_directory_role.dir-reader.object_id
-  member_object_id = azuread_service_principal.lacework[0].object_id
-}
-
 resource "azuread_service_principal" "lacework" {
   count          = var.create ? 1 : 0
   application_id = local.application_id
 }
 
+resource "azuread_directory_role_member" "lacework-dir-reader" {
+  role_object_id   = azuread_directory_role.dir-reader.object_id
+  member_object_id = local.service_principal_id
+  depends_on       = [azuread_service_principal.lacework]
+}
+
 resource "azuread_application_password" "client_secret" {
   count                 = var.create ? 1 : 0
-  application_object_id = azuread_application.lacework[count.index].object_id
+  application_object_id = local.application_id #azuread_application.lacework[count.index].object_id
   end_date              = "2299-12-31T01:02:03Z"
   depends_on            = [azuread_service_principal.lacework]
 }
