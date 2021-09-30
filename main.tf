@@ -55,7 +55,7 @@ resource "azuread_directory_role_member" "lacework-dir-reader" {
 
 resource "azuread_application_password" "client_secret" {
   count                 = var.create ? 1 : 0
-  application_object_id = local.application_id #azuread_application.lacework[count.index].object_id
+  application_object_id = azuread_application.lacework[0].object_id
   end_date              = "2299-12-31T01:02:03Z"
   depends_on            = [azuread_service_principal.lacework]
 }
