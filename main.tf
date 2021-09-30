@@ -47,6 +47,7 @@ resource "azuread_service_principal" "lacework" {
 }
 
 resource "azuread_directory_role_member" "lacework-dir-reader" {
+  count            = var.create ? 1 : 0
   role_object_id   = azuread_directory_role.dir-reader.object_id
   member_object_id = local.service_principal_id
   depends_on       = [azuread_service_principal.lacework]
