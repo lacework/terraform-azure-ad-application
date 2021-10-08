@@ -18,6 +18,7 @@ provider "azurerm" {
 }
 
 data "azuread_client_config" "current" {}
+data "azurerm_subscription" "primary" {}
 
 ## Create a service principal and assigned Directory Reader role in Azure AD
 resource "azuread_application" "lacework" {
