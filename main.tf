@@ -1,5 +1,5 @@
 locals {
-  tenant_id = length(var.tenant_id) > 0 ? var.tenant_id : data.azurerm_subscription.primary.tenant_id
+  tenant_id = length(var.tenant_id) > 0 ? var.tenant_id : data.azuread_client_config.current.tenant_id
 
   application_id = var.create ? (
     length(azuread_application.lacework) > 0 ? azuread_application.lacework[0].application_id : ""
