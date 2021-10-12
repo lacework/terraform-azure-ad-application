@@ -25,7 +25,7 @@ variable "application_name" {
 variable "tenant_id" {
   type        = string
   default     = ""
-  description = "[DEPRECATED] A Tenant ID different from the default defined inside the provider"
+  description = "A Tenant ID different from the default defined inside the provider"
 }
 
 variable "password_length" {
