@@ -23,7 +23,7 @@ provider "lacework" {}
 
 module "ad_application" {
   source  = "lacework/ad-application/azure"
-  version = "~> 0.1"
+  version = "~> 1.0"
   create  = false
 }
 ```
