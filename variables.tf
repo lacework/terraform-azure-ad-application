@@ -1,7 +1,7 @@
 variable "create" {
   type        = bool
   default     = true
-  description = "Set to `false` to prevent the module from creating any resources"
+  description = "(DEPRECATED) Set to `false` to prevent the module from creating any resources"
 }
 
 variable "subscription_ids" {
@@ -13,7 +13,7 @@ variable "subscription_ids" {
 variable "all_subscriptions" {
   type        = bool
   default     = false
-  description = "If set to `true`, grant read access to ALL subscriptions within the selected Tenant (overrides `subscription_ids`)"
+  description = "(DEPRECATED) If set to `true`, grant read access to ALL subscriptions within the selected Tenant (overrides `subscription_ids`)"
 }
 
 variable "application_name" {
