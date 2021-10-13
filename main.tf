@@ -27,8 +27,7 @@ resource "azuread_application" "lacework" {
   }
 }
 resource "azuread_directory_role" "dir-reader" {
-  #alternatively display_name = "Directory Reader" 
-  template_id = "88d8e3e3-8f55-4a1e-953a-9b9898b8876b"
+  display_name = "Directory Readers" 
 }
 
 resource "azuread_service_principal" "lacework" {
