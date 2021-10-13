@@ -1,5 +1,5 @@
 # Release Notes
-Another day, another release. These are the release notes for the version `v0.2.3`.
+Another day, another release. These are the release notes for the version `v1.0.0`.
 
 ## Refactor
 * refactor: update examples and format code for release (#31) (Salim Afiune)([17d1bef](https://github.com/lacework/terraform-azure-ad-application/commit/17d1bef1c5161f9c309198237d988c87e85c1843))
