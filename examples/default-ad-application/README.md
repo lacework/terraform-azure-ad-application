@@ -1,25 +1,11 @@
-# Default AD Application to Integrate Azure Tenant and Default Subscription
+# Default Creation of AD Application for Lacework
 
-The following example shows how to deploy a new Azure AD application to integrate an Azure Tenant and select subscriptions with Lacework. This example provides examples of configuring the integration with module inputs.
+The following example shows how to deploy a new Azure AD application to be used in other modules to integrate Azure Tenant and Subscriptions with Lacework.
 
 ## Sample Code
 
 ```hcl
-terraform {
-  required_providers {
-    lacework = {
-      source = "lacework/lacework"
-    }
-  }
-}
-
 provider "azuread" {}
-
-provider "azurerm" {
-  features {}
-}
-
-provider "lacework" {}
 
 module "ad_application" {
   source  = "lacework/ad-application/azure"

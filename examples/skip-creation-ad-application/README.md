@@ -5,25 +5,11 @@ The following example shows how to use module inputs to skip the creation of the
 ## Sample Code
 
 ```hcl
-terraform {
-  required_providers {
-    lacework = {
-      source = "lacework/lacework"
-    }
-  }
-}
-
 provider "azuread" {}
-
-provider "azurerm" {
-  features {}
-}
-
-provider "lacework" {}
 
 module "ad_application" {
   source  = "lacework/ad-application/azure"
-  version = "~> 0.1"
+  version = "~> 1.0"
   create  = false
 }
 ```

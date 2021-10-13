@@ -1,7 +1,21 @@
 variable "create" {
   type        = bool
   default     = true
-  description = "[DEPRECATED] Set to `false` to prevent the module from creating any resources"
+  description = "Set to `false` to prevent the module from creating any resources"
+}
+
+variable "application_name" {
+  type        = string
+  default     = "lacework_security_audit"
+  description = "The name of the Azure Active Directory Application"
+}
+
+# @afiune We should remove these deprecations in a couple of months
+# https://github.com/lacework/terraform-azure-ad-application/issues/30
+variable "application_identifier_uris" {
+  type        = list(string)
+  description = "[DEPRECATED] A list of user-defined URI(s) for the Lacework AD Application"
+  default     = []
 }
 
 variable "subscription_ids" {
@@ -14,12 +28,6 @@ variable "all_subscriptions" {
   type        = bool
   default     = false
   description = "[DEPRECATED] If set to `true`, grant read access to ALL subscriptions within the selected Tenant (overrides `subscription_ids`)"
-}
-
-variable "application_name" {
-  type        = string
-  default     = "lacework_security_audit"
-  description = "The name of the Azure Active Directory Application"
 }
 
 variable "tenant_id" {
@@ -41,14 +49,6 @@ variable "key_vault_ids" {
   description = "[DEPRECATED] A list of Key Vault Ids used in your subscription for the Lacework AD App to have access to"
   default     = []
 }
-
-# TODO @afiune do we need this?
-variable "application_identifier_uris" {
-  type        = list(string)
-  description = "A list of user-defined URI(s) for the Lacework AD Application"
-  default     = []
-}
-
 variable "use_management_group" {
   type        = bool
   default     = false
