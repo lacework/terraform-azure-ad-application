@@ -6,6 +6,7 @@
 [![Codefresh build status](https://g.codefresh.io/api/badges/pipeline/lacework/terraform-modules%2Ftest-compatibility?type=cf-1&key=eyJhbGciOiJIUzI1NiJ9.NWVmNTAxOGU4Y2FjOGQzYTkxYjg3ZDEx.RJ3DEzWmBXrJX7m38iExJ_ntGv4_Ip8VTa-an8gBwBo)](https://g.codefresh.io/pipelines/edit/new/builds?id=607e25e6728f5a6fba30431b&pipeline=test-compatibility&projects=terraform-modules&projectId=607db54b728f5a5f8930405d)
 
 Terraform module that creates an Azure Active Directory Application to provide Lacework read-only access to Azure Subscriptions and Tenants.
+Lacework logins to Azure using a service principal (an App Registration) with Directory.Read.All on [MS Graph API](https://docs.microsoft.com/en-us/graph/api/user-list?view=graph-rest-1.0&tabs=http#permissions) which can also be achieved using a [Directory Reader role on Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#directory-readers) 
 
 ## Inputs
 
