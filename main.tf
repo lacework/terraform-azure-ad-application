@@ -16,7 +16,7 @@ data "azuread_client_config" "current" {}
 resource "azuread_application" "lacework" {
   count         = var.create ? 1 : 0
   display_name  = var.application_name
-  owners        = [data.azuread_client_config.current.object_id]
+  owners        = length(var.application_owners) == 0 ? [data.azuread_client_config.current.object_id] : var.application_owners
   logo_image    = filebase64("${path.module}/imgs/lacework_logo.png")
   marketing_url = "https://www.lacework.com/"
   web {

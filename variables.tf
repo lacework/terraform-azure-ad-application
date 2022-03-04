@@ -18,6 +18,12 @@ variable "application_identifier_uris" {
   default     = []
 }
 
+variable "application_owners" {
+  type = list(string)
+  default = []
+  description = "The owners of the Azure Active Directory Application. If empty, current user will be owner"
+}
+
 variable "subscription_ids" {
   type        = list(string)
   description = "[DEPRECATED] List of subscriptions to grant read access to. By default the module will only use the primary subscription"
