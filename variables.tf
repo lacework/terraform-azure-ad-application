@@ -20,14 +20,14 @@ variable "application_identifier_uris" {
 
 variable "subscription_ids" {
   type        = list(string)
-  description = "[DEPRECATED] List of subscriptions to grant read access to. By default the module will only use the primary subscription"
+  description = "[DEPRECATED] Use this input on upstream modules. (https://registry.terraform.io/modules/lacework/config/azure/latest?tab=inputs and https://registry.terraform.io/modules/lacework/activity-log/azure/latest?tab=inputs)"
   default     = []
 }
 
 variable "all_subscriptions" {
   type        = bool
   default     = false
-  description = "[DEPRECATED] If set to `true`, grant read access to ALL subscriptions within the selected Tenant (overrides `subscription_ids`)"
+  description = "[DEPRECATED] Use this input on upstream modules. (https://registry.terraform.io/modules/lacework/config/azure/latest?tab=inputs and https://registry.terraform.io/modules/lacework/activity-log/azure/latest?tab=inputs)"
 }
 
 variable "tenant_id" {
@@ -52,11 +52,11 @@ variable "key_vault_ids" {
 variable "use_management_group" {
   type        = bool
   default     = false
-  description = "[DEPRECATED] If set to `true`, the AD Application will be set up to leverage a Management Group"
+  description = "[DEPRECATED] Use this input on upstream module: https://registry.terraform.io/modules/lacework/config/azure/latest?tab=inputs"
 }
 
 variable "management_group_id" {
   type        = string
   default     = ""
-  description = "[DEPRECATED] The ID of the Management Group"
+  description = "[DEPRECATED] Use this input on upstream module: https://registry.terraform.io/modules/lacework/config/azure/latest?tab=inputs"
 }
