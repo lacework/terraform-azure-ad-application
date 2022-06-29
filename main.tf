@@ -43,10 +43,10 @@ resource "azuread_application_password" "client_secret" {
 # When to use this role? When Granting service principals access to directory where
 # Directory.Read.All is not an option. This way we avoid Grant Admin Consent issue.
 #
-# => https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#directory-readers 
-resource "azuread_directory_role_member" "lacework_dir_reader" {
-  count            = var.create ? 1 : 0
-  role_object_id   = azuread_directory_role.dir_reader.object_id
-  member_object_id = local.service_principal_id
-  depends_on       = [azuread_service_principal.lacework]
+# => https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#directory-readers
+resource "azuread_directory_role_assignment" "lacework_dir_reader" {
+  count               = var.create ? 1 : 0
+  role_id             = azuread_directory_role.dir_reader.template_id
+  principal_object_id = local.service_principal_id
+  depends_on          = [azuread_service_principal.lacework]
 }

@@ -13,13 +13,13 @@ Lacework logins to Azure using a service principal (an App Registration) with Di
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.6 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.25 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~> 2.6 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~> 2.25 |
 
 ## Resources
 
@@ -28,7 +28,7 @@ Lacework logins to Azure using a service principal (an App Registration) with Di
 | [azuread_application.lacework](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
 | [azuread_application_password.client_secret](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_password) | resource |
 | [azuread_directory_role.dir_reader](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role) | resource |
-| [azuread_directory_role_member.lacework_dir_reader](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role_member) | resource |
+| [azuread_directory_role_assignment.lacework_dir_reader](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/directory_role_assignment) | resource |
 | [azuread_service_principal.lacework](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
 | [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
 
