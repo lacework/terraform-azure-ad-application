@@ -49,5 +49,10 @@ resource "azuread_directory_role_assignment" "lacework_dir_reader" {
   count               = var.create ? (var.enable_directory_reader? 1 : 0 ) : 0  
   role_id             = azuread_directory_role.dir_reader[count.index].template_id
   principal_object_id = local.service_principal_id
-  depends_on          = [azuread_service_principal.lacework]
+  depends_on          = [azuread_service_principal.lacework, time_sleep.wait_60_seconds]
+}
+
+// Wait for azuread_directory_role_member to be removed to avoid conflict
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
 }
