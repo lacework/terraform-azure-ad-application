@@ -32,6 +32,7 @@ resource "azuread_directory_role" "dir_reader" {
 resource "azuread_service_principal" "lacework" {
   count          = var.create ? 1 : 0
   application_id = local.application_id
+  owners        = length(var.application_owners) == 0 ? [data.azuread_client_config.current.object_id] : var.application_owners
 }
 
 resource "azuread_application_password" "client_secret" {
