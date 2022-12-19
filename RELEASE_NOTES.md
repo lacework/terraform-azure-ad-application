@@ -1,7 +1,7 @@
 # Release Notes
-Another day, another release. These are the release notes for the version `v1.2.1`.
+Another day, another release. These are the release notes for the version `v1.3.0`.
 
-## Bug Fixes
-* fix: upgrade issue from v1.1.0 -> v1.2.0 (#45) (Darren)([aff3fff](https://github.com/lacework/terraform-azure-ad-application/commit/aff3fff9c74e91e938a6e41636171b9a670725ac))
+## Features
+* feat: Set owner for service principal (#47) (NolanT)([d07c25e](https://github.com/lacework/terraform-azure-ad-application/commit/d07c25e4a427ce0f3c324159bc3f380bf5dc7873))
 ## Other Changes
-* ci: version bump to v1.2.1-dev (Lacework)([16d4aa9](https://github.com/lacework/terraform-azure-ad-application/commit/16d4aa9663b110a3a80e4a3f2923082416568a6e))
+* ci: version bump to v1.2.2-dev (Lacework)([30f50e3](https://github.com/lacework/terraform-azure-ad-application/commit/30f50e3d0ec2a5546123fe1c02df4c65d27adc45))
