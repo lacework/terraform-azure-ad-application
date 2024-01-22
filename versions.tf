@@ -6,5 +6,9 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 2.25"
     }
+    lacework = {
+      source  = "lacework/lacework"
+      version = "~> 1.18"
+    }
   }
 }

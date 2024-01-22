@@ -8,6 +8,9 @@ locals {
   service_principal_id = var.create ? (
     length(azuread_service_principal.lacework) > 0 ? azuread_service_principal.lacework[0].object_id : ""
   ) : ""
+  version_file   = "${abspath(path.module)}/VERSION"
+  module_name    = basename(abspath(path.module))
+  module_version = fileexists(local.version_file) ? file(local.version_file) : ""
 }
 
 data "azuread_client_config" "current" {}
@@ -56,4 +59,9 @@ resource "azuread_directory_role_assignment" "lacework_dir_reader" {
 // Wait for azuread_directory_role_member to be removed to avoid conflict
 resource "time_sleep" "wait_60_seconds" {
   create_duration = "60s"
+}
+
+data "lacework_metric_module" "lwmetrics" {
+  name    = local.module_name
+  version = local.module_version
 }
