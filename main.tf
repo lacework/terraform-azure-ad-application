@@ -9,7 +9,7 @@ locals {
     length(azuread_service_principal.lacework) > 0 ? azuread_service_principal.lacework[0].object_id : ""
   ) : ""
   version_file   = "${abspath(path.module)}/VERSION"
-  module_name    = basename(abspath(path.module))
+  module_name    = "terraform-azure-ad-application"
   module_version = fileexists(local.version_file) ? file(local.version_file) : ""
 }
 
