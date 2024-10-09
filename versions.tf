@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.25"
+      version = "~> 3.0"
     }
     lacework = {
       source  = "lacework/lacework"

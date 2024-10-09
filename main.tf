@@ -1,6 +1,6 @@
 locals {
-  application_id = var.create ? (
-    length(azuread_application.lacework) > 0 ? azuread_application.lacework[0].application_id : ""
+  client_id = var.create ? (
+    length(azuread_application.lacework) > 0 ? azuread_application.lacework[0].client_id : ""
   ) : ""
   application_password = var.create ? (
     length(azuread_application_password.client_secret) > 0 ? azuread_application_password.client_secret[0].value : ""
@@ -34,13 +34,13 @@ resource "azuread_directory_role" "dir_reader" {
 
 resource "azuread_service_principal" "lacework" {
   count          = var.create ? 1 : 0
-  application_id = local.application_id
+  client_id      = local.client_id
   owners        = length(var.application_owners) == 0 ? [data.azuread_client_config.current.object_id] : var.application_owners
 }
 
 resource "azuread_application_password" "client_secret" {
   count                 = var.create ? 1 : 0
-  application_object_id = azuread_application.lacework[count.index].object_id
+  application_id        = azuread_application.lacework[count.index].id
   end_date              = "2299-12-31T01:02:03Z"
   depends_on            = [azuread_service_principal.lacework]
 }

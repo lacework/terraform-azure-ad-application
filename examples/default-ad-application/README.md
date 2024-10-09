@@ -9,7 +9,7 @@ provider "azuread" {}
 
 module "ad_application" {
   source  = "lacework/ad-application/azure"
-  version = "~> 1.0"
+  version = "~> 2.0"
 }
 ```
 

@@ -11,7 +11,7 @@ provider "azuread" {}
 
 module "ad_application" {
   source           = "lacework/ad-application/azure"
-  version          = "~> 1.0"
+  version          = "~> 2.0"
   application_name = "lacework_custom_ad_application_name"
 }
 ```
