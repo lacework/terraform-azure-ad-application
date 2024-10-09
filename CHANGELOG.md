@@ -1,4 +1,6 @@
 # v2.0.0
+## Refactor
+* refactor: Upgrade azureAD to 3.X.
 
 ## Other Changes
 * chore(GROW-2952): add codeowners (#57) (Matt Cadorette)([356a04d](https://github.com/lacework/terraform-azure-ad-application/commit/356a04d982415223885df6ed1b56f2b0f8970e32))
